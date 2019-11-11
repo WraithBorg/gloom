@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vue Demo</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+<body>
+<div id="firstVue">
+    <input type="number" v-model.number="my_step" />
+    <button v-on:click="clickButton">Add</button>
+    <p>{{my_total}}</p>
+</div>
+</body>
+<script type="text/javascript">
+    var myVue = new Vue({
+        el:'#firstVue',
+        data:{
+            my_step: 1,
+            my_total: 0
+        },
+        methods:{
+            clickButton:function(){
+                this.my_total = this.my_total + this.my_step
+            }
+        }
+    })
+</script>
+</html>
