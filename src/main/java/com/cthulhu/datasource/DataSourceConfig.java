@@ -14,8 +14,6 @@ import javax.sql.DataSource;
 /**
  * https://blog.csdn.net/lulitianyu/article/details/79566775
  * 数据源配置管理
- *
- * @author Administrator
  */
 @Configuration
 @MapperScan(basePackages = "com.cthulhu.mapper", value = "sqlSessionFactory")

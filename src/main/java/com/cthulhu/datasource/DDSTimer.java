@@ -4,10 +4,8 @@ import org.apache.tomcat.jdbc.pool.DataSource;
 
 /**
  * 动态数据源定时器管理。长时间无访问的数据库连接关闭。
- *
- * @author Administrator
  */
-public class DDSTimer {
+class DDSTimer {
 
 	/**
 	 * 空闲时间周期。超过这个时长没有访问的数据库连接将被释放。默认为10分钟
@@ -22,7 +20,7 @@ public class DDSTimer {
 	 */
 	private long lastUseTime;
 
-	public DDSTimer(DataSource dds) {
+	DDSTimer(DataSource dds) {
 		this.dds = dds;
 		this.lastUseTime = System.currentTimeMillis();
 	}
@@ -30,16 +28,15 @@ public class DDSTimer {
 	/**
 	 * 更新最近访问时间
 	 */
-	public void refreshTime() {
+	void refreshTime() {
 		lastUseTime = System.currentTimeMillis();
 	}
 
 	/**
 	 * 检测数据连接是否超时关闭。
 	 *
-	 * @return
 	 */
-	public boolean checkAndClose() {
+	boolean checkAndClose() {
 		if (System.currentTimeMillis() - lastUseTime > idlePeriodTime) {
 			dds.close();
 			return true;
@@ -47,7 +44,7 @@ public class DDSTimer {
 		return false;
 	}
 
-	public DataSource getDds() {
+	DataSource getDds() {
 		return dds;
 	}
 }

@@ -4,22 +4,18 @@ import com.cthulhu.datasource.DBIdentifier;
 import com.cthulhu.entity.UserInfoBean;
 import com.cthulhu.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/user")
 public class UserController {
-	@Autowired
+	@Resource
 	private UserMapper userMapper;
 
-	@RequestMapping(value = "/users",method = RequestMethod.GET)
-	public List<UserInfoBean> queryAllUser(@RequestParam(value = "projectCode")String projectCode){
-		// http://127.0.0.1:8080/user/users?projectCode=project_001
+	@RequestMapping(value = "/{data_source_url}/user/users",method = RequestMethod.GET)
+	public List<UserInfoBean> queryAllUser(@PathVariable(value = "data_source_url")String projectCode){
 		DBIdentifier.setProjectCode(projectCode);
 		return userMapper.getUsers();
 	}

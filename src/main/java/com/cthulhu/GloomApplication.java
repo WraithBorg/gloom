@@ -12,9 +12,5 @@ public class GloomApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(GloomApplication.class, args);
 	}
-	@RequestMapping("/main")
-	public void main(HttpServletRequest request){
-		//设置数据库名
-	}
 
 }

@@ -9,9 +9,8 @@ import java.util.Timer;
 
 /**
  * 动态数据源管理器
- * @author Administrator
  */
-public class DDSHolder {
+class DDSHolder {
 	/**
 	 * 管理动态数据源列表。<工程编码，数据源>
 	 */
@@ -27,19 +26,19 @@ public class DDSHolder {
 	private DDSHolder() {
 	}
 
-	public static DDSHolder instance() {
+	static DDSHolder instance() {
 		return DDSHolderBuilder.instance;
 	}
 
 	private static class DDSHolderBuilder{
 		private static DDSHolder instance = new DDSHolder();
 	}
-	public synchronized void addDDS(String projectCode, DataSource dds){
+	synchronized void addDDS(String projectCode, DataSource dds){
 		DDSTimer ddst = new DDSTimer(dds);
 		ddsMap.put(projectCode, ddst);
 	}
 
-	public synchronized DataSource getDDS(String projectCode){
+	synchronized DataSource getDDS(String projectCode){
 		if (ddsMap.containsKey(projectCode)){
 			DDSTimer ddst = ddsMap.get(projectCode);
 			ddst.refreshTime();
@@ -48,16 +47,7 @@ public class DDSHolder {
 		return null;
 	}
 
-	public synchronized void clearIdleDDS(){
-		Iterator<Map.Entry<String, DDSTimer>> iter = ddsMap.entrySet().iterator();
-		while (iter.hasNext()) {
-			Map.Entry<String, DDSTimer> entry = iter.next();
-			if (entry.getValue().checkAndClose()){
-				iter.remove();
-			}
-
-		}
-
-
+	synchronized void clearIdleDDS(){
+		ddsMap.entrySet().removeIf(entry -> entry.getValue().checkAndClose());
 	}
 }
